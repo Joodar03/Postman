@@ -8,52 +8,19 @@ import {Route, BrowserRouter, Switch} from "react-router-dom";
 class App extends Component {
     state = {
         data: [
-            {
-                id: 12,
-                title: "Card Title",
-                image: "/product.webp",
-                text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
-                price: 130
-            },
-            {
-                id: 24,
-                title: "Card Title2",
-                image: "/product.webp",
-                text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
-                price: 150
-            },
-            {
-                id: 45,
-                title: "Card Title3",
-                image: "/product.webp",
-                text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
-                price: 170
-            },
-            {
-                id: 56,
-                title: "Card Title4",
-                image: "/product.webp",
-                text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
-                price: 110
-            },
-            {
-                id: 1243,
-                title: "Card Title5",
-                image: "/product.webp",
-                text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
-                price: 125
-            },
-            {
-                id: 78,
-                title: "Card Title6",
-                image: "/product.webp",
-                text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
-                price: 146
-            }
+
         ],
-        cart: []
+        cart: [],
     }
 
+    componentDidMount(){
+        console.log(fetch("https://nurkadyr.pythonanywhere.com/product/").then((response)=>{
+            response.json().then((json)=>{
+                this.setState({data:json.results})
+                console.log(json)
+            })
+        }))
+    }
     addToCart = (id) => () => {
         this.setState(({cart, data}) => {
             const product = {...data.find((product) => product.id === id), count: 1}
